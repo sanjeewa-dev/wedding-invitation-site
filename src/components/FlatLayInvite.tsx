@@ -41,7 +41,6 @@ export function FlatLayInvite({
   function handleCardClick() {
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
-    if (isMobile) return;
     setCardFocus((value) => !value);
   }
 
@@ -139,40 +138,40 @@ export function FlatLayInvite({
     >
       <div className="linen-weave-overlay absolute inset-0 z-0" aria-hidden />
 
-      {!isMobile ? (
-        <div className="absolute top-2 right-2 z-40 sm:right-6">
-          <div
-            role="group"
-            aria-label="View mode"
-            className="inline-flex rounded-full border border-amber-200/35 bg-[#3b3127]/85 p-0.5 shadow-md backdrop-blur-md"
+      <div className="absolute top-2 right-2 z-40 sm:right-6">
+        <div
+          role="group"
+          aria-label="View mode"
+          className="inline-flex rounded-full border border-amber-200/35 bg-[#3b3127]/85 p-0.5 shadow-md backdrop-blur-md"
+        >
+          <button
+            type="button"
+            aria-pressed={!cardFocus}
+            onClick={() => setCardFocus(false)}
+            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
+              !cardFocus
+                ? "bg-amber-100 text-[#3b3127] shadow-sm"
+                : "text-amber-50/80 hover:text-amber-50"
+            }`}
           >
-            <button
-              type="button"
-              aria-pressed={!cardFocus}
-              onClick={() => setCardFocus(false)}
-              className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
-                !cardFocus
-                  ? "bg-amber-100 text-[#3b3127] shadow-sm"
-                  : "text-amber-50/80 hover:text-amber-50"
-              }`}
-            >
-              Flat Lay
-            </button>
-            <button
-              type="button"
-              aria-pressed={cardFocus}
-              onClick={() => setCardFocus(true)}
-              className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
-                cardFocus
-                  ? "bg-amber-100 text-[#3b3127] shadow-sm"
-                  : "text-amber-50/80 hover:text-amber-50"
-              }`}
-            >
-              Card Focus
-            </button>
-          </div>
+            Flat Lay
+          </button>
+          <button
+            type="button"
+            aria-pressed={cardFocus}
+            onClick={() => setCardFocus(true)}
+            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
+              cardFocus
+                ? "bg-amber-100 text-[#3b3127] shadow-sm"
+                : "text-amber-50/80 hover:text-amber-50"
+            }`}
+          >
+            Card Focus
+          </button>
         </div>
-      ) : (
+      </div>
+
+      {isMobile ? (
         <div
           className={`scroll-down-hint pointer-events-none absolute inset-x-0 bottom-5 z-40 flex flex-col items-center gap-1 transition-opacity duration-500 ${
             cardFocus ? "opacity-0" : "opacity-100"
@@ -186,7 +185,7 @@ export function FlatLayInvite({
             ↓
           </span>
         </div>
-      )}
+      ) : null}
 
       <div
         ref={viewportRef}
