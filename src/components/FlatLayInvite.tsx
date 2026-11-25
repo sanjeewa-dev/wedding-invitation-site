@@ -32,28 +32,16 @@ export function FlatLayInvite({
 }) {
   const [cardFocus, setCardFocus] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [opened, setOpened] = useState(false);
   const scrollRootRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement | null>(null);
   const envelopeRef = useRef<HTMLDivElement>(null);
-  const focusLockRef = useRef(false);
 
   function handleCardClick() {
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
-
-    // On mobile, card opens via scroll; tap reinforces focus
-    if (isMobile) {
-      if (!cardFocus) {
-        setCardFocus(true);
-        focusLockRef.current = true;
-      }
-      setOpened(true);
-      return;
-    }
-
+    if (isMobile) return;
     setCardFocus((value) => !value);
   }
 
@@ -62,27 +50,16 @@ export function FlatLayInvite({
     function syncMobile() {
       const mobile = media.matches;
       setIsMobile(mobile);
-      if (!mobile) {
-        focusLockRef.current = false;
-        setOpened(false);
-      } else {
-        // Mobile always starts as flat lay
-        setCardFocus(false);
-        setOpened(false);
-        focusLockRef.current = false;
-      }
+      if (mobile) setCardFocus(false);
     }
     syncMobile();
     media.addEventListener("change", syncMobile);
     return () => media.removeEventListener("change", syncMobile);
   }, []);
 
-  // Mobile: scroll through a tall sticky hero → Flat Lay → Card Focus → continue
+  // Mobile only: scroll Flat Lay → Card Focus
   useEffect(() => {
     if (!isMobile) return;
-
-    const root = scrollRootRef.current;
-    if (!root) return;
 
     let frame = 0;
 
@@ -92,31 +69,15 @@ export function FlatLayInvite({
         const el = scrollRootRef.current;
         if (!el) return;
 
-        const rect = el.getBoundingClientRect();
         const total = el.offsetHeight - window.innerHeight;
         if (total <= 0) return;
 
-        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const scrolled = Math.min(
+          Math.max(-el.getBoundingClientRect().top, 0),
+          total,
+        );
         const progress = scrolled / total;
-
-        // 0–20%: flat lay · 20–45%: transition into focus · 45%+: hold card open
-        if (progress >= 0.22) {
-          if (!focusLockRef.current) {
-            focusLockRef.current = true;
-            setCardFocus(true);
-          }
-          if (progress >= 0.4) setOpened(true);
-        } else if (progress < 0.12 && !focusLockRef.current) {
-          setCardFocus(false);
-          setOpened(false);
-        }
-
-        // Allow reverse only near the top before lock settles
-        if (progress < 0.08) {
-          focusLockRef.current = false;
-          setCardFocus(false);
-          setOpened(false);
-        }
+        setCardFocus(progress >= 0.35);
       });
     }
 
@@ -168,13 +129,13 @@ export function FlatLayInvite({
       window.removeEventListener("resize", syncStationeryAndScale);
       observer?.disconnect();
     };
-  }, [cardFocus, isMobile, opened]);
+  }, [cardFocus, isMobile]);
 
   const hero = (
     <div
       className={`flatlay-hero relative w-full ${cardFocus ? "flatlay-closeup" : ""} ${
-        opened ? "flatlay-opened" : ""
-      } ${isMobile ? "flatlay-hero-mobile" : ""}`}
+        isMobile ? "flatlay-hero-mobile" : ""
+      }`}
     >
       <div className="linen-weave-overlay absolute inset-0 z-0" aria-hidden />
 
@@ -211,15 +172,7 @@ export function FlatLayInvite({
             </button>
           </div>
         </div>
-      ) : (
-        <p
-          className={`pointer-events-none absolute top-3 left-1/2 z-40 -translate-x-1/2 rounded-full bg-[#3b3127]/75 px-3 py-1 text-[10px] tracking-[0.18em] text-amber-50/90 uppercase transition-opacity duration-500 ${
-            cardFocus ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          Scroll to open
-        </p>
-      )}
+      ) : null}
 
       <div
         ref={viewportRef}
@@ -269,9 +222,7 @@ export function FlatLayInvite({
     </div>
   );
 
-  if (!isMobile) {
-    return hero;
-  }
+  if (!isMobile) return hero;
 
   return (
     <div ref={scrollRootRef} className="flatlay-scroll-track relative">
