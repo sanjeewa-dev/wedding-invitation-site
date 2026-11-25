@@ -314,14 +314,77 @@ h3.font-script,
     inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
+/* Mobile scroll choreography: Flat Lay → Card Focus → continue */
+.flatlay-scroll-track {
+  height: 240vh;
+}
+
+.flatlay-scroll-sticky {
+  min-height: calc(100svh - 3.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.flatlay-hero-mobile {
+  min-height: calc(100svh - 3.5rem);
+  transition: background-color 0.7s ease;
+}
+
+.flatlay-hero-mobile.flatlay-closeup {
+  background-color: #e9e2d8;
+}
+
+.flatlay-opened .invite-flatlay {
+  animation: invite-open 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes invite-open {
+  0% {
+    filter: brightness(0.96);
+    box-shadow:
+      0 10px 24px rgba(64, 54, 42, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  }
+  45% {
+    filter: brightness(1.04);
+    box-shadow:
+      0 34px 70px rgba(64, 54, 42, 0.34),
+      0 12px 28px rgba(197, 160, 89, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  }
+  100% {
+    filter: brightness(1);
+    box-shadow:
+      0 26px 56px rgba(64, 54, 42, 0.28),
+      0 8px 20px rgba(64, 54, 42, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
+}
+
 @media (max-width: 767px) {
   .flatlay-hero {
     min-height: auto;
   }
 
+  .flatlay-hero-mobile {
+    min-height: calc(100svh - 3.5rem);
+  }
+
   .flatlay-closeup .invite-flatlay {
-    top: 56px !important;
+    top: 48px !important;
     transform: translateX(-50%) scale(1);
+    transition:
+      left 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      top 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.75s ease;
+  }
+
+  .flatlay-prop {
+    transition:
+      opacity 0.65s ease,
+      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .countdown-panel {
@@ -332,9 +395,24 @@ h3.font-script,
     box-shadow: 0 10px 24px rgba(61, 0, 16, 0.06);
   }
 
-  /* Keep long uppercase invite lines from forcing horizontal scroll */
   .invite-flatlay {
     overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flatlay-opened .invite-flatlay {
+    animation: none;
+  }
+
+  .flatlay-scroll-track {
+    height: auto;
+  }
+
+  .flatlay-scroll-sticky {
+    position: relative;
+    top: auto;
+    min-height: auto;
   }
 }
 

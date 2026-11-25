@@ -11,6 +11,7 @@ import { format, parseISO } from "date-fns";
 
 const STAGE_W = 1180;
 const STAGE_H = 940;
+const MOBILE_QUERY = "(max-width: 767px)";
 
 function crestDateLabel(date: string) {
   try {
@@ -30,29 +31,102 @@ export function FlatLayInvite({
   groom: string;
 }) {
   const [cardFocus, setCardFocus] = useState(false);
-  const [mobileReady, setMobileReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [opened, setOpened] = useState(false);
+  const scrollRootRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement | null>(null);
   const envelopeRef = useRef<HTMLDivElement>(null);
+  const focusLockRef = useRef(false);
 
   function handleCardClick() {
     const selection = window.getSelection();
     if (selection && selection.toString().length > 0) return;
+
+    // On mobile, card opens via scroll; tap reinforces focus
+    if (isMobile) {
+      if (!cardFocus) {
+        setCardFocus(true);
+        focusLockRef.current = true;
+      }
+      setOpened(true);
+      return;
+    }
+
     setCardFocus((value) => !value);
   }
 
-  // Phones: start in Card Focus so the invitation is readable
   useEffect(() => {
-    const narrow = window.matchMedia("(max-width: 767px)");
-    function applyDefault() {
-      if (narrow.matches) setCardFocus(true);
-      setMobileReady(true);
+    const media = window.matchMedia(MOBILE_QUERY);
+    function syncMobile() {
+      const mobile = media.matches;
+      setIsMobile(mobile);
+      if (!mobile) {
+        focusLockRef.current = false;
+        setOpened(false);
+      } else {
+        // Mobile always starts as flat lay
+        setCardFocus(false);
+        setOpened(false);
+        focusLockRef.current = false;
+      }
     }
-    applyDefault();
-    narrow.addEventListener("change", applyDefault);
-    return () => narrow.removeEventListener("change", applyDefault);
+    syncMobile();
+    media.addEventListener("change", syncMobile);
+    return () => media.removeEventListener("change", syncMobile);
   }, []);
+
+  // Mobile: scroll through a tall sticky hero → Flat Lay → Card Focus → continue
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const root = scrollRootRef.current;
+    if (!root) return;
+
+    let frame = 0;
+
+    function onScroll() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const el = scrollRootRef.current;
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+        const total = el.offsetHeight - window.innerHeight;
+        if (total <= 0) return;
+
+        const scrolled = Math.min(Math.max(-rect.top, 0), total);
+        const progress = scrolled / total;
+
+        // 0–20%: flat lay · 20–45%: transition into focus · 45%+: hold card open
+        if (progress >= 0.22) {
+          if (!focusLockRef.current) {
+            focusLockRef.current = true;
+            setCardFocus(true);
+          }
+          if (progress >= 0.4) setOpened(true);
+        } else if (progress < 0.12 && !focusLockRef.current) {
+          setCardFocus(false);
+          setOpened(false);
+        }
+
+        // Allow reverse only near the top before lock settles
+        if (progress < 0.08) {
+          focusLockRef.current = false;
+          setCardFocus(false);
+          setOpened(false);
+        }
+      });
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [isMobile]);
 
   useEffect(() => {
     function syncStationeryAndScale() {
@@ -68,11 +142,10 @@ export function FlatLayInvite({
 
       const narrow = window.innerWidth < 768;
       const padX = narrow ? 16 : 24;
-      const padY = narrow ? 96 : 72;
+      const padY = narrow ? 100 : 72;
       const availW = Math.max(280, window.innerWidth - padX);
       const availH = Math.max(360, window.innerHeight - padY);
 
-      // Card Focus: scale against the invitation card so it fills the phone screen
       const targetW = cardFocus ? 500 : STAGE_W;
       const targetH = cardFocus ? 740 : STAGE_H;
       const nextScale = Math.min(1, availW / targetW, availH / targetH);
@@ -95,45 +168,58 @@ export function FlatLayInvite({
       window.removeEventListener("resize", syncStationeryAndScale);
       observer?.disconnect();
     };
-  }, [cardFocus, mobileReady]);
+  }, [cardFocus, isMobile, opened]);
 
-  return (
-    <div className={`flatlay-hero relative w-full ${cardFocus ? "flatlay-closeup" : ""}`}>
+  const hero = (
+    <div
+      className={`flatlay-hero relative w-full ${cardFocus ? "flatlay-closeup" : ""} ${
+        opened ? "flatlay-opened" : ""
+      } ${isMobile ? "flatlay-hero-mobile" : ""}`}
+    >
       <div className="linen-weave-overlay absolute inset-0 z-0" aria-hidden />
 
-      {/* Toggle overlays the stage — no extra vertical space */}
-      <div className="absolute top-2 right-2 z-40 sm:right-6">
-        <div
-          role="group"
-          aria-label="View mode"
-          className="inline-flex rounded-full border border-amber-200/35 bg-[#3b3127]/85 p-0.5 shadow-md backdrop-blur-md"
-        >
-          <button
-            type="button"
-            aria-pressed={!cardFocus}
-            onClick={() => setCardFocus(false)}
-            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
-              !cardFocus
-                ? "bg-amber-100 text-[#3b3127] shadow-sm"
-                : "text-amber-50/80 hover:text-amber-50"
-            }`}
+      {!isMobile ? (
+        <div className="absolute top-2 right-2 z-40 sm:right-6">
+          <div
+            role="group"
+            aria-label="View mode"
+            className="inline-flex rounded-full border border-amber-200/35 bg-[#3b3127]/85 p-0.5 shadow-md backdrop-blur-md"
           >
-            Flat Lay
-          </button>
-          <button
-            type="button"
-            aria-pressed={cardFocus}
-            onClick={() => setCardFocus(true)}
-            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
-              cardFocus
-                ? "bg-amber-100 text-[#3b3127] shadow-sm"
-                : "text-amber-50/80 hover:text-amber-50"
-            }`}
-          >
-            Card Focus
-          </button>
+            <button
+              type="button"
+              aria-pressed={!cardFocus}
+              onClick={() => setCardFocus(false)}
+              className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
+                !cardFocus
+                  ? "bg-amber-100 text-[#3b3127] shadow-sm"
+                  : "text-amber-50/80 hover:text-amber-50"
+              }`}
+            >
+              Flat Lay
+            </button>
+            <button
+              type="button"
+              aria-pressed={cardFocus}
+              onClick={() => setCardFocus(true)}
+              className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
+                cardFocus
+                  ? "bg-amber-100 text-[#3b3127] shadow-sm"
+                  : "text-amber-50/80 hover:text-amber-50"
+              }`}
+            >
+              Card Focus
+            </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <p
+          className={`pointer-events-none absolute top-3 left-1/2 z-40 -translate-x-1/2 rounded-full bg-[#3b3127]/75 px-3 py-1 text-[10px] tracking-[0.18em] text-amber-50/90 uppercase transition-opacity duration-500 ${
+            cardFocus ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          Scroll to open
+        </p>
+      )}
 
       <div
         ref={viewportRef}
@@ -179,6 +265,18 @@ export function FlatLayInvite({
             ref={cardRef}
           />
         </div>
+      </div>
+    </div>
+  );
+
+  if (!isMobile) {
+    return hero;
+  }
+
+  return (
+    <div ref={scrollRootRef} className="flatlay-scroll-track relative">
+      <div className="flatlay-scroll-sticky sticky top-14 z-10 sm:top-20">
+        {hero}
       </div>
     </div>
   );
