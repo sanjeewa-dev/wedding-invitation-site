@@ -172,8 +172,12 @@ export const InviteCard = forwardRef<
           <p className="pt-1.5 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[#8a6418]">
             RSVP (REGRETS ONLY)
           </p>
-          <p className="text-[10px] font-medium uppercase tracking-[0.12em] text-[#463829]">
-            BRIDE - 0713736261&nbsp;&nbsp;|&nbsp;&nbsp;groom - 0772697028
+          <p className="text-[10px] font-medium uppercase leading-relaxed tracking-[0.1em] text-[#463829]">
+            BRIDE - 0713736261
+            <span className="mx-1.5 opacity-50" aria-hidden>
+              |
+            </span>
+            GROOM - 0772697028
           </p>
         </div>
       </div>

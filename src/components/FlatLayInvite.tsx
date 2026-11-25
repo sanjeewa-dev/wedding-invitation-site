@@ -30,6 +30,7 @@ export function FlatLayInvite({
   groom: string;
 }) {
   const [cardFocus, setCardFocus] = useState(false);
+  const [mobileReady, setMobileReady] = useState(false);
   const viewportRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLElement | null>(null);
@@ -40,6 +41,18 @@ export function FlatLayInvite({
     if (selection && selection.toString().length > 0) return;
     setCardFocus((value) => !value);
   }
+
+  // Phones: start in Card Focus so the invitation is readable
+  useEffect(() => {
+    const narrow = window.matchMedia("(max-width: 767px)");
+    function applyDefault() {
+      if (narrow.matches) setCardFocus(true);
+      setMobileReady(true);
+    }
+    applyDefault();
+    narrow.addEventListener("change", applyDefault);
+    return () => narrow.removeEventListener("change", applyDefault);
+  }, []);
 
   useEffect(() => {
     function syncStationeryAndScale() {
@@ -53,11 +66,19 @@ export function FlatLayInvite({
         envelope.style.height = `${card.offsetHeight}px`;
       }
 
-      const availW = window.innerWidth - 24;
-      const availH = window.innerHeight - 72;
-      const nextScale = Math.min(1, availW / STAGE_W, availH / STAGE_H);
+      const narrow = window.innerWidth < 768;
+      const padX = narrow ? 16 : 24;
+      const padY = narrow ? 96 : 72;
+      const availW = Math.max(280, window.innerWidth - padX);
+      const availH = Math.max(360, window.innerHeight - padY);
+
+      // Card Focus: scale against the invitation card so it fills the phone screen
+      const targetW = cardFocus ? 500 : STAGE_W;
+      const targetH = cardFocus ? 740 : STAGE_H;
+      const nextScale = Math.min(1, availW / targetW, availH / targetH);
+
       stage.style.transform = `scale(${nextScale})`;
-      viewport.style.height = `${Math.ceil(STAGE_H * nextScale)}px`;
+      viewport.style.height = `${Math.ceil(targetH * nextScale)}px`;
     }
 
     syncStationeryAndScale();
@@ -74,14 +95,14 @@ export function FlatLayInvite({
       window.removeEventListener("resize", syncStationeryAndScale);
       observer?.disconnect();
     };
-  }, [cardFocus]);
+  }, [cardFocus, mobileReady]);
 
   return (
     <div className={`flatlay-hero relative w-full ${cardFocus ? "flatlay-closeup" : ""}`}>
       <div className="linen-weave-overlay absolute inset-0 z-0" aria-hidden />
 
       {/* Toggle overlays the stage — no extra vertical space */}
-      <div className="absolute top-2 right-3 z-40 sm:right-6">
+      <div className="absolute top-2 right-2 z-40 sm:right-6">
         <div
           role="group"
           aria-label="View mode"
@@ -91,7 +112,7 @@ export function FlatLayInvite({
             type="button"
             aria-pressed={!cardFocus}
             onClick={() => setCardFocus(false)}
-            className={`rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide transition-all ${
+            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
               !cardFocus
                 ? "bg-amber-100 text-[#3b3127] shadow-sm"
                 : "text-amber-50/80 hover:text-amber-50"
@@ -103,7 +124,7 @@ export function FlatLayInvite({
             type="button"
             aria-pressed={cardFocus}
             onClick={() => setCardFocus(true)}
-            className={`rounded-full px-3.5 py-1.5 text-xs font-medium tracking-wide transition-all ${
+            className={`min-h-9 rounded-full px-3 py-1.5 text-[11px] font-medium tracking-wide transition-all sm:min-h-0 sm:px-3.5 sm:text-xs ${
               cardFocus
                 ? "bg-amber-100 text-[#3b3127] shadow-sm"
                 : "text-amber-50/80 hover:text-amber-50"

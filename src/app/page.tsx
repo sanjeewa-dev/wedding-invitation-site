@@ -55,15 +55,15 @@ export default async function HomePage() {
       <section
         id="story"
         data-reveal
-        className="mx-auto max-w-5xl scroll-mt-24 px-3 py-14 sm:px-6 md:py-20"
+        className="mx-auto max-w-5xl scroll-mt-20 px-3 py-10 sm:scroll-mt-24 sm:px-6 sm:py-14 md:py-20"
       >
         <SectionHeading
           title={dict.story.title}
           lead={dict.story.lead}
           eyebrow="Love Story"
         />
-        <article className="invite-panel rounded-2xl p-6 sm:p-8 md:p-10">
-          <div className="mx-auto max-w-3xl space-y-5 text-sm leading-relaxed text-ink/80 sm:text-base">
+        <article className="invite-panel rounded-2xl p-4 sm:p-8 md:p-10">
+          <div className="mx-auto max-w-3xl space-y-4 text-sm leading-relaxed break-words text-ink/80 sm:space-y-5 sm:text-base">
             {storyParagraphs(settings.story).map((paragraph) => (
               <p key={paragraph.slice(0, 48)}>{paragraph}</p>
             ))}
@@ -90,7 +90,7 @@ export default async function HomePage() {
       <section
         id="details"
         data-reveal
-        className="section-soft mx-auto my-6 max-w-6xl scroll-mt-24 rounded-3xl px-3 py-14 sm:px-6 md:py-20"
+        className="section-soft mx-auto my-4 max-w-6xl scroll-mt-20 rounded-2xl px-3 py-10 sm:my-6 sm:scroll-mt-24 sm:rounded-3xl sm:px-6 sm:py-14 md:py-20"
       >
         <SectionHeading
           title={dict.details.title}
@@ -157,7 +157,7 @@ export default async function HomePage() {
         data-reveal
         className="mx-auto max-w-4xl scroll-mt-24 px-3 py-14 text-center sm:px-6 md:py-16"
       >
-        <div className="invite-panel relative overflow-hidden rounded-2xl border-2 border-gold/50 p-8 shadow-xl sm:p-12">
+        <div className="invite-panel relative overflow-hidden rounded-2xl border-2 border-gold/50 p-5 shadow-xl sm:p-12">
           <SectionHeading
             title={dict.dress.title}
             lead={dict.dress.lead}
@@ -178,7 +178,7 @@ export default async function HomePage() {
         data-reveal
         className="mx-auto max-w-4xl scroll-mt-24 px-3 py-10 text-center sm:px-6 md:py-14"
       >
-        <div className="rounded-2xl border border-gold/40 bg-white/80 p-8 shadow-sm sm:p-10">
+        <div className="rounded-2xl border border-gold/40 bg-white/80 p-5 shadow-sm sm:p-10">
           <SectionHeading
             title={dict.gifts.title}
             lead={dict.gifts.lead}
@@ -204,7 +204,7 @@ export default async function HomePage() {
           lead={settings.venue_name}
           eyebrow="Location"
         />
-        <div className="invite-panel grid items-center gap-6 rounded-2xl p-6 shadow-xl sm:p-8 lg:grid-cols-2">
+        <div className="invite-panel grid items-center gap-5 rounded-2xl p-4 shadow-xl sm:gap-6 sm:p-8 lg:grid-cols-2">
           <div className="space-y-4 text-center lg:text-left">
             <h3 className="font-display text-2xl font-bold text-burgundy-dark">
               {settings.venue_name}
@@ -244,7 +244,7 @@ export default async function HomePage() {
         data-reveal
         className="mx-auto max-w-3xl scroll-mt-24 px-3 py-14 sm:px-6 md:py-20"
       >
-        <div className="rounded-3xl border-4 border-gold bg-gradient-to-b from-cream to-warm-sand p-6 shadow-2xl sm:p-10 md:p-12">
+        <div className="rounded-2xl border-2 border-gold bg-gradient-to-b from-cream to-warm-sand p-4 shadow-2xl sm:rounded-3xl sm:border-4 sm:p-10 md:p-12">
           <SectionHeading
             title={dict.rsvpPublic.title}
             lead={dict.rsvpPublic.lead}
@@ -258,7 +258,17 @@ export default async function HomePage() {
               <p className="font-display text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-deep">
                 RSVP (Regrets Only)
               </p>
-              <p>Bride - 0713736261 &nbsp;|&nbsp; groom - 0772697028</p>
+              <div className="flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-2">
+                <a href="tel:0713736261" className="tap-target px-2">
+                  Bride - 0713736261
+                </a>
+                <span className="hidden text-ink/30 sm:inline" aria-hidden>
+                  |
+                </span>
+                <a href="tel:0772697028" className="tap-target px-2">
+                  Groom - 0772697028
+                </a>
+              </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a

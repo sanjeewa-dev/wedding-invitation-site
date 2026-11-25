@@ -74,22 +74,22 @@ export function Countdown({
 
   return (
     <div
-      className="countdown-panel mx-auto w-full max-w-3xl rounded-2xl p-5 text-center sm:p-6"
+      className="countdown-panel mx-auto w-full max-w-3xl rounded-2xl p-3 text-center sm:p-6"
       aria-live="polite"
       suppressHydrationWarning
     >
-      <h3 className="font-display mb-4 text-xs uppercase tracking-[0.2em] text-gold sm:text-sm">
+      <h3 className="font-display mb-3 text-[10px] uppercase tracking-[0.18em] text-gold sm:mb-4 sm:text-sm">
         {dict.home.countdownLead}
       </h3>
-      <div className="grid grid-cols-4 gap-2 sm:gap-4">
+      <div className="grid grid-cols-4 gap-1.5 sm:gap-4">
         {items.map(([value, label]) => (
-          <div key={label} className="countdown-cell rounded-lg p-3">
+          <div key={label} className="countdown-cell rounded-lg p-2 sm:p-3">
             <div
-              className={`font-display text-2xl font-bold text-white sm:text-4xl ${ready ? "" : "opacity-40"}`}
+              className={`font-display text-xl font-bold text-white sm:text-4xl ${ready ? "" : "opacity-40"}`}
             >
               {String(value).padStart(2, "0")}
             </div>
-            <div className="mt-1 text-[10px] uppercase tracking-wider text-gold/90 sm:text-xs">
+            <div className="mt-1 text-[9px] uppercase tracking-wider text-gold/90 sm:text-xs">
               {label}
             </div>
           </div>
