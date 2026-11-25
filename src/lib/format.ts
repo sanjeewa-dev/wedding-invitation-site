@@ -16,6 +16,26 @@ export function formatWeddingDate(date: string) {
   }
 }
 
+/** Split story text into paragraphs (handles CRLF / blank lines / single newlines). */
+export function storyParagraphs(story: string): string[] {
+  const text = story.replace(/\r\n/g, "\n").trim();
+  if (!text) return [];
+
+  const byBlank = text
+    .split(/\n\s*\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (byBlank.length > 1) return byBlank;
+
+  const byLine = text
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  if (byLine.length > 1) return byLine;
+
+  return [text];
+}
+
 export function formatWeddingTime(time: string) {
   const match = /^(\d{1,2}):(\d{2})/.exec(time);
   if (!match) return time;

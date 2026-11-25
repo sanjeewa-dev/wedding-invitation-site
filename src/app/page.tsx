@@ -6,6 +6,7 @@ import {
   coupleNames,
   formatWeddingDate,
   formatWeddingTime,
+  storyParagraphs,
   whatsappUrl,
 } from "@/lib/format";
 import { dict } from "@/lib/i18n/dictionaries";
@@ -63,13 +64,9 @@ export default async function HomePage() {
         />
         <article className="invite-panel rounded-2xl p-6 sm:p-8 md:p-10">
           <div className="mx-auto max-w-3xl space-y-5 text-sm leading-relaxed text-ink/80 sm:text-base">
-            {settings.story
-              .split(/\n\n+/)
-              .map((paragraph) => paragraph.trim())
-              .filter(Boolean)
-              .map((paragraph) => (
-                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
-              ))}
+            {storyParagraphs(settings.story).map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
             <p className="font-invite-serif pt-2 text-center text-lg italic leading-relaxed text-burgundy-deep sm:text-xl md:text-2xl">
               &ldquo;From the classrooms where our friendship blossomed to the
               dreams we quietly built together, every little moment brought us
