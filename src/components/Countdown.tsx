@@ -7,7 +7,33 @@ type Parts = { days: number; hours: number; minutes: number; seconds: number };
 
 const EMPTY: Parts = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
+/** Build a local Date from Postgres date (`YYYY-MM-DD`) + time (`HH:mm` or `HH:mm:ss`). */
+function parseWeddingTarget(weddingDate: string, weddingTime: string): Date {
+  const datePart = weddingDate.slice(0, 10);
+  const [year, month, day] = datePart.split("-").map(Number);
+  const timeMatch = /^(\d{1,2}):(\d{2})(?::(\d{2}))?/.exec(
+    (weddingTime || "00:00").trim(),
+  );
+  const hours = timeMatch ? Number(timeMatch[1]) : 0;
+  const minutes = timeMatch ? Number(timeMatch[2]) : 0;
+  const seconds = timeMatch?.[3] ? Number(timeMatch[3]) : 0;
+
+  if (
+    !year ||
+    !month ||
+    !day ||
+    Number.isNaN(hours) ||
+    Number.isNaN(minutes) ||
+    Number.isNaN(seconds)
+  ) {
+    return new Date(NaN);
+  }
+
+  return new Date(year, month - 1, day, hours, minutes, seconds);
+}
+
 function getParts(target: Date): Parts {
+  if (Number.isNaN(target.getTime())) return EMPTY;
   const diff = Math.max(0, target.getTime() - Date.now());
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
   const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -26,7 +52,7 @@ export function Countdown({
   dict: Dictionary;
 }) {
   const target = useMemo(
-    () => new Date(`${weddingDate}T${weddingTime || "00:00"}:00`),
+    () => parseWeddingTarget(weddingDate, weddingTime),
     [weddingDate, weddingTime],
   );
   const [parts, setParts] = useState<Parts>(EMPTY);

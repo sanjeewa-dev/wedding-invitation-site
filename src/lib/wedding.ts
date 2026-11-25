@@ -36,8 +36,17 @@ function normalizeSettings(row: Record<string, unknown>): WeddingSettings {
     groom_parents: String(
       row.groom_parents ?? DEFAULT_SETTINGS.groom_parents,
     ),
-    wedding_date: String(row.wedding_date ?? DEFAULT_SETTINGS.wedding_date),
-    wedding_time: String(row.wedding_time ?? DEFAULT_SETTINGS.wedding_time),
+    wedding_date: String(row.wedding_date ?? DEFAULT_SETTINGS.wedding_date).slice(
+      0,
+      10,
+    ),
+    wedding_time: (() => {
+      const raw = String(row.wedding_time ?? DEFAULT_SETTINGS.wedding_time);
+      const match = /^(\d{1,2}):(\d{2})/.exec(raw);
+      return match
+        ? `${match[1].padStart(2, "0")}:${match[2]}`
+        : DEFAULT_SETTINGS.wedding_time;
+    })(),
     venue_name: String(row.venue_name ?? DEFAULT_SETTINGS.venue_name),
     venue_address: String(row.venue_address ?? DEFAULT_SETTINGS.venue_address),
     contact_number: String(
