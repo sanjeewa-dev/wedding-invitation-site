@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" fill="none">
+  <defs>
+    <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFF8EE"/>
+      <stop offset="100%" stop-color="#F0E2D0"/>
+    </linearGradient>
+    <linearGradient id="leaf" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4B56A"/>
+      <stop offset="100%" stop-color="#9A7B3C"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="55" cy="120" rx="40" ry="14" fill="url(#leaf)" opacity="0.35"/>
+  <ellipse cx="145" cy="122" rx="42" ry="14" fill="url(#leaf)" opacity="0.3"/>
+  <path d="M100 130 C85 95 70 70 100 30 C130 70 115 95 100 130Z" fill="url(#petal)"/>
+  <path d="M100 130 C70 100 45 85 55 40 C90 70 95 100 100 130Z" fill="#FFF8EE" opacity="0.96"/>
+  <path d="M100 130 C130 100 155 85 145 40 C110 70 105 100 100 130Z" fill="#FFF8EE" opacity="0.96"/>
+  <path d="M100 130 C80 110 55 105 40 70 C75 85 90 110 100 130Z" fill="#F7E6D4" opacity="0.95"/>
+  <path d="M100 130 C120 110 145 105 160 70 C125 85 110 110 100 130Z" fill="#F7E6D4" opacity="0.95"/>
+  <circle cx="100" cy="88" r="8" fill="#C4A35A" opacity="0.9"/>
+</svg>
