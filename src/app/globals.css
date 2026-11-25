@@ -339,8 +339,15 @@ h3.font-script,
   min-height: calc(100svh - 3.5rem);
 }
 
+.flatlay-mobile-chrome {
+  flex-shrink: 0;
+}
+
 .flatlay-hero-mobile {
-  min-height: calc(100svh - 3.5rem);
+  min-height: calc(100svh - 3.5rem - 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 @media (max-width: 767px) {
