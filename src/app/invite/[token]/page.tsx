@@ -113,12 +113,6 @@ export default async function InvitePage({
             >
               {dict.nav.venue}
             </Link>
-            <Link
-              href="/#gallery"
-              className="text-gold underline-offset-4 hover:underline"
-            >
-              {dict.nav.gallery}
-            </Link>
           </div>
         </div>
       </article>

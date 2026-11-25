@@ -10,7 +10,6 @@ const links = [
   ["#dress", "dress"],
   ["#gifts", "gifts"],
   ["#venue", "venue"],
-  ["#gallery", "gallery"],
   ["#rsvp", "rsvp"],
   ["#contact", "contact"],
 ] as const;

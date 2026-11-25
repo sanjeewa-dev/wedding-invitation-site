@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Marcellus, Montserrat } from "next/font/google";
+import {
+  Cinzel,
+  Cinzel_Decorative,
+  Cormorant_Garamond,
+  Marcellus,
+  Montserrat,
+} from "next/font/google";
 import localFont from "next/font/local";
 import { IntroVideo } from "@/components/IntroVideo";
 import "./globals.css";
@@ -8,6 +14,25 @@ const display = Marcellus({
   variable: "--font-display",
   subsets: ["latin"],
   weight: "400",
+});
+
+const foil = Cinzel({
+  variable: "--font-foil",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const foilDecor = Cinzel_Decorative({
+  variable: "--font-foil-decor",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const inviteSerif = Cormorant_Garamond({
+  variable: "--font-invite-serif",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 const body = Montserrat({
@@ -54,7 +79,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${body.variable} ${script.variable} h-full scroll-smooth`}
+      className={`${display.variable} ${foil.variable} ${foilDecor.variable} ${inviteSerif.variable} ${body.variable} ${script.variable} h-full scroll-smooth`}
     >
       <body className="min-h-full antialiased">
         <IntroVideo />

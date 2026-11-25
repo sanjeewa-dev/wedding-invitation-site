@@ -39,6 +39,9 @@
   --color-burgundy-deep: var(--burgundy-deep);
   --color-burgundy-dark: var(--burgundy-dark);
   --font-display: var(--font-display);
+  --font-foil: var(--font-foil);
+  --font-foil-decor: var(--font-foil-decor);
+  --font-invite-serif: var(--font-invite-serif);
   --font-body: var(--font-body);
   --font-script: var(--font-script);
 }
@@ -110,6 +113,205 @@ h3.font-script,
 
 .script-glow {
   text-shadow: 0 2px 10px rgba(197, 160, 89, 0.25);
+}
+
+.font-foil {
+  font-family: var(--font-foil), "Cinzel", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.font-invite-serif {
+  font-family: var(--font-invite-serif), "Cormorant Garamond", Georgia, serif;
+}
+
+.couple-name {
+  font-family: var(--font-foil), "Cinzel", Georgia, serif;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  line-height: 0.98;
+  text-transform: uppercase;
+  background: linear-gradient(
+    135deg,
+    #9c7222 0%,
+    #d4af37 32%,
+    #f1d47a 52%,
+    #c59835 76%,
+    #94691c 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0.75px 0 rgba(255, 250, 232, 0.75))
+    drop-shadow(0 1px 1.5px rgba(128, 89, 20, 0.24));
+}
+
+.swash-initial {
+  font-family: var(--font-foil-decor), "Cinzel Decorative", serif;
+  font-weight: 400;
+  font-size: 1.28em;
+  display: inline-block;
+  margin-right: -0.02em;
+  transform: translateY(0.03em);
+  background: linear-gradient(
+    135deg,
+    #986d1e 0%,
+    #d9b244 35%,
+    #f5da86 55%,
+    #bf902e 80%,
+    #8f6418 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Solid readable gold for props on taupe surfaces (cake box / envelope) */
+.foil-text-solid,
+.foil-text-solid .swash-initial {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  color: #9a6f1f;
+  filter: none;
+  text-shadow:
+    0 1px 0 rgba(255, 248, 230, 0.55),
+    0 0.5px 1px rgba(74, 48, 10, 0.28);
+}
+
+.invite-paper,
+.paper-texture {
+  background-color: #f6f2eb;
+  background-image:
+    radial-gradient(rgba(74, 62, 48, 0.045) 0.75px, transparent 0),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.45) 0%, rgba(214, 204, 190, 0.22) 100%);
+  background-size: 9px 9px, 100% 100%;
+}
+
+.stationery-dimensions {
+  width: 480px;
+  height: 672px;
+}
+
+.box-shadow-deep {
+  box-shadow:
+    10px 18px 30px rgba(62, 51, 38, 0.28),
+    3px 7px 12px rgba(62, 51, 38, 0.16),
+    inset 0 1px 1px rgba(255, 255, 255, 0.85);
+}
+
+.invite-flatlay,
+.flatlay-shadow {
+  box-shadow:
+    6px 14px 28px rgba(72, 61, 48, 0.22),
+    2px 4px 10px rgba(72, 61, 48, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.invite-flatlay {
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.6s ease;
+}
+
+.flatlay-hero {
+  background-color: #e6dfd5;
+  background-image:
+    radial-gradient(
+      ellipse at 36% 24%,
+      rgba(255, 253, 249, 0.85) 0%,
+      rgba(235, 228, 217, 0.55) 48%,
+      rgba(196, 185, 171, 0.72) 100%
+    ),
+    linear-gradient(135deg, #f1ece4 0%, #e5ded3 45%, #d8cfc2 100%);
+}
+
+.linen-weave-overlay {
+  pointer-events: none;
+  opacity: 0.42;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      rgba(135, 122, 106, 0.055) 0,
+      rgba(135, 122, 106, 0.055) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(135, 122, 106, 0.055) 0,
+      rgba(135, 122, 106, 0.055) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    radial-gradient(circle at 75% 80%, rgba(168, 154, 138, 0.18), transparent 60%);
+}
+
+.envelope-texture {
+  background-color: #c4b8a6;
+  background-image:
+    radial-gradient(rgba(74, 58, 36, 0.055) 0.7px, transparent 0),
+    linear-gradient(155deg, rgba(255, 250, 240, 0.28) 0%, rgba(122, 102, 74, 0.16) 100%);
+  background-size: 8px 8px, 100% 100%;
+}
+
+.wedding-ring {
+  position: relative;
+  border-radius: 9999px;
+  background: conic-gradient(
+    from 32deg,
+    #9e7328,
+    #f7dc88,
+    #c79638,
+    #fff0b8,
+    #8a611b,
+    #e8c264,
+    #9e7328
+  );
+  box-shadow:
+    3px 6px 11px rgba(58, 42, 16, 0.34),
+    inset 0 1.5px 2.5px rgba(255, 252, 232, 0.9),
+    inset 0 -1.5px 2.5px rgba(92, 62, 14, 0.65);
+}
+
+.wedding-ring::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border-radius: 9999px;
+  background: #c4b8a6;
+  box-shadow:
+    inset 2px 3px 5px rgba(66, 48, 20, 0.38),
+    0 1px 1.5px rgba(255, 246, 214, 0.7);
+}
+
+#flatlay-stage {
+  width: 1180px;
+  height: 940px;
+  transform-origin: top center;
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flatlay-prop {
+  transition:
+    opacity 0.55s ease,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.flatlay-closeup .flatlay-prop {
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+}
+
+.flatlay-closeup .invite-flatlay {
+  left: 50% !important;
+  top: 80px !important;
+  transform: translateX(-50%) scale(1.12);
+  box-shadow:
+    0 26px 56px rgba(64, 54, 42, 0.28),
+    0 8px 20px rgba(64, 54, 42, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
 .gold-border {

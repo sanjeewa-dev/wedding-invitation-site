@@ -141,7 +141,7 @@ export const dict: Dictionary = {
   },
   story: {
     title: "Our Story",
-    lead: "A celebration of love, tradition, and togetherness.",
+    lead: "From Schoolmates to Soulmates",
   },
   details: {
     title: "Wedding Details",
