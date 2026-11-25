@@ -330,7 +330,7 @@ h3.font-script,
   }
 }
 
-/* Mobile: sticky scroll switches Flat Lay → Card Focus */
+/* Mobile only: sticky scroll switches Flat Lay → Card Focus */
 .flatlay-scroll-track {
   height: 180vh;
 }
@@ -339,15 +339,8 @@ h3.font-script,
   min-height: calc(100svh - 3.5rem);
 }
 
-.flatlay-mobile-chrome {
-  flex-shrink: 0;
-}
-
 .flatlay-hero-mobile {
-  min-height: calc(100svh - 3.5rem - 2.75rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  min-height: calc(100svh - 3.5rem);
 }
 
 @media (max-width: 767px) {
