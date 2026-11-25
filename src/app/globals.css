@@ -314,6 +314,22 @@ h3.font-script,
     inset 0 1px 0 rgba(255, 255, 255, 0.75);
 }
 
+.scroll-down-chevron {
+  animation: scroll-down-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes scroll-down-bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
 /* Mobile: sticky scroll switches Flat Lay → Card Focus */
 .flatlay-scroll-track {
   height: 180vh;
@@ -355,6 +371,10 @@ h3.font-script,
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .scroll-down-chevron {
+    animation: none;
+  }
+
   .flatlay-scroll-track {
     height: auto;
   }

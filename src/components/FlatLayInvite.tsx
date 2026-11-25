@@ -172,7 +172,21 @@ export function FlatLayInvite({
             </button>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div
+          className={`scroll-down-hint pointer-events-none absolute inset-x-0 bottom-5 z-40 flex flex-col items-center gap-1 transition-opacity duration-500 ${
+            cardFocus ? "opacity-0" : "opacity-100"
+          }`}
+          aria-hidden={cardFocus}
+        >
+          <span className="rounded-full bg-[#3b3127]/75 px-3 py-1 text-[10px] tracking-[0.2em] text-amber-50/95 uppercase">
+            Scroll down
+          </span>
+          <span className="scroll-down-chevron text-lg leading-none text-[#3b3127]/80">
+            ↓
+          </span>
+        </div>
+      )}
 
       <div
         ref={viewportRef}

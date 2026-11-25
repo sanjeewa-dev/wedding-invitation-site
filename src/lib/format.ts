@@ -47,8 +47,19 @@ export function formatWeddingTime(time: string) {
   return `${hours}:${minutes} ${suffix}`;
 }
 
+/** Build a wa.me link that opens a chat with the phone number (not a username). */
 export function whatsappUrl(phone: string, message?: string) {
-  const digits = phone.replace(/\D/g, "");
+  let digits = phone.replace(/\D/g, "");
+
+  // Sri Lanka local numbers (0XXXXXXXXX) → 94XXXXXXXXX for WhatsApp
+  if (digits.startsWith("0") && digits.length === 10) {
+    digits = `94${digits.slice(1)}`;
+  } else if (digits.startsWith("94") && digits.length === 11) {
+    // already international
+  } else if (!digits.startsWith("94") && digits.length === 9) {
+    digits = `94${digits}`;
+  }
+
   const text = message ? `?text=${encodeURIComponent(message)}` : "";
   return `https://wa.me/${digits}${text}`;
 }
