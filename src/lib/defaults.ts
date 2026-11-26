@@ -32,7 +32,7 @@ export const DEFAULT_SETTINGS: WeddingSettings = {
   gifts_text:
     "We are genuinely just excited to have you share our day but if you wish to honor us with a gift, a wishing well will be available at the venue.",
   rsvp_public_text:
-    "We hope you can make it but if you can't please let us know via WhatsApp by the 25th of December 2026.",
+    "This is a regrets-only RSVP. If you are unable to join us, kindly let us know via WhatsApp by 25 December 2026.",
   schedule: [
     {
       time: "10:30 AM",

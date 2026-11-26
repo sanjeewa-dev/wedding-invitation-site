@@ -171,7 +171,7 @@ export const dict: Dictionary = {
   },
   rsvpPublic: {
     title: "RSVP",
-    lead: "We hope you can celebrate with us.",
+    lead: "Your presence would mean the world to us.",
     whatsappCta: "Message us on WhatsApp",
   },
   contact: {

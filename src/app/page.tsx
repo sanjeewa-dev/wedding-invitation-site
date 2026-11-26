@@ -65,7 +65,9 @@ export default async function HomePage() {
         <article className="invite-panel rounded-2xl p-4 sm:p-8 md:p-10">
           <div className="mx-auto max-w-3xl space-y-4 text-sm leading-relaxed break-words text-ink/80 sm:space-y-5 sm:text-base">
             {storyParagraphs(settings.story).map((paragraph) => (
-              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              <p key={paragraph.slice(0, 48)} className="text-justify">
+                {paragraph}
+              </p>
             ))}
             <p className="font-invite-serif pt-2 text-center text-lg italic leading-relaxed text-burgundy-deep sm:text-xl md:text-2xl">
               &ldquo;From the classrooms where our friendship blossomed to the
@@ -274,7 +276,7 @@ export default async function HomePage() {
               <a
                 href={whatsappUrl(
                   "0713736261",
-                  "Hello! Regarding Sasini & Chathuranga's wedding RSVP...",
+                  "Dear Sasini,\n\nThank you for the kind invitation to your wedding on 21 January 2027.\n\nI regret to inform you that I will be unable to attend. Please accept my sincere apologies.\n\nWith warm wishes,\n",
                 )}
                 target="_blank"
                 rel="noreferrer"
@@ -285,7 +287,7 @@ export default async function HomePage() {
               <a
                 href={whatsappUrl(
                   "0772697028",
-                  "Hello! Regarding Sasini & Chathuranga's wedding RSVP...",
+                  "Dear Chathuranga,\n\nThank you for the kind invitation to your wedding on 21 January 2027.\n\nI regret to inform you that I will be unable to attend. Please accept my sincere apologies.\n\nWith warm wishes,\n",
                 )}
                 target="_blank"
                 rel="noreferrer"
