@@ -115,8 +115,12 @@ export function IntroVideo() {
 
       {!opened ? (
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-[#1a120f]/70 px-5 text-white">
-          <span className="font-script max-w-[18ch] text-center text-[2.4rem] leading-tight tracking-wide sm:text-4xl md:max-w-none md:text-6xl">
-            Sasini & Chathuranga
+          <span className="font-script flex flex-col items-center text-center text-[2.4rem] leading-[1.15] tracking-wide sm:text-4xl md:text-6xl">
+            <span>Sasini</span>
+            <span className="font-display my-1 text-[0.55em] text-gold sm:my-1.5">
+              &
+            </span>
+            <span>Chathuranga</span>
           </span>
           <span className="mt-3 text-[11px] uppercase tracking-[0.28em] text-white/80 sm:text-sm sm:tracking-[0.3em]">
             Our Forever Begins
