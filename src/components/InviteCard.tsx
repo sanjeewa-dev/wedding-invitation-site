@@ -109,10 +109,6 @@ export const InviteCard = forwardRef<
       </svg>
 
       <div className="relative z-10 flex flex-col items-center">
-        <p className="mb-2.5 text-[10.5px] font-medium uppercase tracking-[0.23em] text-[#4a3b2b]">
-          {dict.home.youAreInvited}
-        </p>
-
         <h1 className="my-1 select-text">
           <SwashName name={bride} className="couple-name block text-[38px]" />
           <span className="my-1 block text-[10.5px] font-semibold uppercase tracking-[0.34em] text-[#9e7322]">

@@ -11,7 +11,7 @@ create table if not exists public.wedding_settings (
   wedding_date date not null default '2027-01-21',
   wedding_time time not null default '10:30',
   venue_name text not null default 'The Royal Banquet Hall of Ella Flower Garden Resort',
-  venue_address text not null default 'Ella Flower Garden Resort, Ella, Sri Lanka',
+  venue_address text not null default 'Ella Flower Garden Resort, 3rd Mile Post, Passara Rd, Ella',
   contact_number text not null default '+94 77 000 0000',
   rsvp_deadline date not null default '2027-01-01',
   story text not null default '',
@@ -49,12 +49,14 @@ alter table public.wedding_settings enable row level security;
 alter table public.guests enable row level security;
 alter table public.rsvps enable row level security;
 
+drop policy if exists "Public read wedding settings" on public.wedding_settings;
 create policy "Public read wedding settings"
   on public.wedding_settings
   for select
   to anon, authenticated
   using (true);
 
+drop policy if exists "Admin manage wedding settings" on public.wedding_settings;
 create policy "Admin manage wedding settings"
   on public.wedding_settings
   for all
@@ -62,6 +64,7 @@ create policy "Admin manage wedding settings"
   using (true)
   with check (true);
 
+drop policy if exists "Admin manage guests" on public.guests;
 create policy "Admin manage guests"
   on public.guests
   for all
@@ -69,6 +72,7 @@ create policy "Admin manage guests"
   using (true)
   with check (true);
 
+drop policy if exists "Admin manage rsvps" on public.rsvps;
 create policy "Admin manage rsvps"
   on public.rsvps
   for all
@@ -103,7 +107,7 @@ insert into public.wedding_settings (
   '2027-01-21',
   '10:30',
   'The Royal Banquet Hall of Ella Flower Garden Resort',
-  'Ella Flower Garden Resort, Ella, Sri Lanka',
+  'Ella Flower Garden Resort, 3rd Mile Post, Passara Rd, Ella',
   '+94 77 000 0000',
   '2027-01-01',
   'Our forever begins with a celebration of love, family, and the traditions that brought us together. We invite you to share in this joyful day as we begin our life as one.',

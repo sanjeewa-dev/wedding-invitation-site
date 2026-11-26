@@ -9,7 +9,7 @@ export const DEFAULT_SETTINGS: WeddingSettings = {
   wedding_date: "2027-01-21",
   wedding_time: "10:30",
   venue_name: "The Royal Banquet Hall of Ella Flower Garden Resort",
-  venue_address: "Ella Flower Garden Resort, Ella, Sri Lanka",
+  venue_address: "Ella Flower Garden Resort, 3rd Mile Post, Passara Rd, Ella",
   contact_number: "0772697028",
   rsvp_deadline: "2026-12-25",
   story: [

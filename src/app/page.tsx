@@ -298,43 +298,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Contact */}
-      <section
-        id="contact"
-        data-reveal
-        className="mx-auto max-w-4xl scroll-mt-24 px-3 py-14 text-center sm:px-6 md:py-16"
-      >
-        <div className="border-t border-gold/40 pt-10">
-          <SectionHeading
-            title={dict.contact.title}
-            lead={dict.contact.lead}
-            eyebrow="Questions?"
-          />
-          <div className="invite-panel mx-auto max-w-md rounded-xl p-6 sm:p-8">
-            <p className="font-script text-2xl text-burgundy-deep sm:text-3xl">
-              {names.bride} & {names.groom}
-            </p>
-            <p className="font-display mt-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold-deep">
-              RSVP (Regrets Only)
-            </p>
-            <div className="mt-5 flex flex-col items-center gap-4 text-burgundy-dark">
-              <a href="tel:0713736261" className="flex min-h-11 flex-col items-center justify-center gap-1">
-                <span className="font-display text-[11px] uppercase tracking-[0.18em] text-gold-deep">
-                  Bride
-                </span>
-                <span className="text-lg sm:text-xl">0713736261</span>
-              </a>
-              <div className="h-px w-16 bg-gold/40" aria-hidden />
-              <a href="tel:0772697028" className="flex min-h-11 flex-col items-center justify-center gap-1">
-                <span className="font-display text-[11px] uppercase tracking-[0.18em] text-gold-deep">
-                  Groom
-                </span>
-                <span className="text-lg sm:text-xl">0772697028</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
     </PublicShell>
   );
 }

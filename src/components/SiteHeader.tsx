@@ -11,7 +11,6 @@ const links = [
   ["#gifts", "gifts"],
   ["#venue", "venue"],
   ["#rsvp", "rsvp"],
-  ["#contact", "contact"],
 ] as const;
 
 function LotusMark({ className = "h-7 w-7" }: { className?: string }) {
