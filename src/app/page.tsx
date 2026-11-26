@@ -186,10 +186,7 @@ export default async function HomePage() {
             lead={dict.gifts.lead}
             eyebrow="Blessings"
           />
-          <p className="font-display text-xl font-bold uppercase tracking-wider text-burgundy-dark sm:text-2xl">
-            {settings.gifts_title}
-          </p>
-          <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-ink/70">
+          <p className="mx-auto max-w-md text-sm leading-relaxed text-ink/70">
             {settings.gifts_text}
           </p>
         </div>
