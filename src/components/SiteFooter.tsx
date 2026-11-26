@@ -12,7 +12,7 @@ export function SiteFooter({ settings }: { settings: WeddingSettings }) {
           {names.bride} <span className="text-gold/80">&</span> {names.groom}
         </p>
         <p className="font-display text-[11px] uppercase tracking-[0.2em] text-gold/80">
-          {formatWeddingDate(settings.wedding_date)} • Ella, Sri Lanka
+          {formatWeddingDate(settings.wedding_date)}
         </p>
         <p className="text-[10px] tracking-wide text-gold/50">
           {dict.footer.withLove}

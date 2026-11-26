@@ -203,7 +203,6 @@ export default async function HomePage() {
       >
         <SectionHeading
           title={dict.venue.title}
-          lead={settings.venue_name}
           eyebrow="Location"
         />
         <div className="invite-panel grid items-center gap-5 rounded-2xl p-4 shadow-xl sm:gap-6 sm:p-8 lg:grid-cols-2">
